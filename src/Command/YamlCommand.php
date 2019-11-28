@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Exception\ParseException;
 use YamlStandards\Command\Service\ProcessOutputService;
 use YamlStandards\Command\Service\ResultService;
@@ -41,6 +42,26 @@ class YamlCommand extends Command
         Reporting::startTiming();
 
         $inputSettingData = new InputSettingData($input);
+
+        $io = new SymfonyStyle($input, $output);
+
+        $io->title('Title');
+        $io->section('Adding a User');
+        $io->text('Lorem ipsum dolor sit amet');
+        $io->newLine(3);
+        $io->note('Lorem ipsum dolor sit amet');
+        $io->caution('Lorem ipsum dolor sit amet');
+        $io->progressStart(100);
+        $io->progressAdvance(10);
+        $io->progressFinish();
+
+        $io->success('Updating is finished');
+        $io->warning('Elastic search is down, It skipped. Error message');
+        $io->error('ElasticSearch exception during searching' );
+        $io->comment('Updating indexes structure');
+
+        exit;
+
         $yamlStandardConfigLoader = new YamlStandardConfigLoader();
         $yamlStandardConfigTotalData = $yamlStandardConfigLoader->loadFromYaml($inputSettingData->getPathToConfigFile());
 
